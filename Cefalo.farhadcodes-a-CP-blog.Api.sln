@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Api", "Cefalo.farhadcodes-a-CP-blog.Api\Cefalo.farhadcodes-a-CP-blog.Api.csproj", "{00510ED5-7DE7-4496-8653-02F9167BCAD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Database", "Cefalo.farhadcodes-a-CP-blog.Database\Cefalo.farhadcodes-a-CP-blog.Database.csproj", "{3D26203D-F06F-4C6C-A0B8-2472EF446556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Service", "Cefalo.farhadcodes-a-CP-blog.Service\Cefalo.farhadcodes-a-CP-blog.Service.csproj", "{6CE894EA-08B3-4227-82EE-107C02198BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Repository", "Cefalo.farhadcodes-a-CP-blog.Repository\Cefalo.farhadcodes-a-CP-blog.Repository.csproj", "{A0926FE0-116A-4D35-9F15-832B7FF12A02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00510ED5-7DE7-4496-8653-02F9167BCAD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00510ED5-7DE7-4496-8653-02F9167BCAD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00510ED5-7DE7-4496-8653-02F9167BCAD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00510ED5-7DE7-4496-8653-02F9167BCAD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D26203D-F06F-4C6C-A0B8-2472EF446556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D26203D-F06F-4C6C-A0B8-2472EF446556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D26203D-F06F-4C6C-A0B8-2472EF446556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D26203D-F06F-4C6C-A0B8-2472EF446556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CE894EA-08B3-4227-82EE-107C02198BA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CE894EA-08B3-4227-82EE-107C02198BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CE894EA-08B3-4227-82EE-107C02198BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CE894EA-08B3-4227-82EE-107C02198BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B3372B69-A524-4491-8C96-CEECB7D649F1}
+	EndGlobalSection
+EndGlobal
