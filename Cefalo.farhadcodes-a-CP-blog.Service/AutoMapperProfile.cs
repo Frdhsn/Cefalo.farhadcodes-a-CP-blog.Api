@@ -8,7 +8,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>().ReverseMap();
+
         }
 
     }

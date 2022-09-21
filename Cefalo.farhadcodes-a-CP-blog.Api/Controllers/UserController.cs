@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -36,6 +36,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
                 return BadRequest("Something went wrong! Can't create a new user!");
 
             return CreatedAtAction(nameof(PostUser), userDto.Id, userDto);
+            //return CreatedAtAction(nameof(PostUser), userDto);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO updatedUserDto)

@@ -17,6 +17,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IUserRepository _userRepository;
         public UserService(IUserRepository userRepository, IMapper mapper) { 
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         
@@ -41,7 +42,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 
         public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUserDto)
         {
-            if (id != updateUserDto.Id) return null;
+            //if (id != updateUserDto) return null;
             User mappedUser = _mapper.Map<User>(updateUserDto);
             
             var updatedUser = await _userRepository.UpdateUser(id, mappedUser);
