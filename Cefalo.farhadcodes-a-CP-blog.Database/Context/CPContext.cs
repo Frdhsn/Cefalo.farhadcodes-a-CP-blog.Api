@@ -14,7 +14,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Context
         public CPContext() { }
         public CPContext(DbContextOptions<CPContext> options): base(options) { }
 
-        DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
         /*protected override void OnModelCreating(ModelBuilder builder)
         {
