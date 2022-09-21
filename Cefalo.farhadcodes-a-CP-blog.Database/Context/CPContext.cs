@@ -16,9 +16,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Context
 
         public DbSet<User> Users { get; set; }
 
-        /*protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            //new UserConfiguration().Configure(builder.Entity<User>());
-        }*/
+            new UserConfiguration().Configure(builder.Entity<User>());
+        }
     }
 }
