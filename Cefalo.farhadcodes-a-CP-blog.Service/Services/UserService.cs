@@ -1,23 +1,26 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
-using Cefalo.farhadcodes_a_CP_blog.Service.DTO;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
+using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 {
     public class UserService: IUserService
     {
         private readonly IMapper _mapper;
+        private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository, IMapper mapper) { 
+        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper) { 
             _userRepository = userRepository;
             _mapper = mapper;
+            _passwordH = passwordH;
         }
 
         
@@ -28,6 +31,11 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         public async Task<UserDTO?> GetUser(int id)
         {
             var user = await _userRepository.GetUser(id);
+            return _mapper.Map<UserDTO>(user);
+        }
+        public async Task<UserDTO?> GetUserByEmail(string email)
+        {
+            var user = await _userRepository.GetUserByEmail(email);
             return _mapper.Map<UserDTO>(user);
         }
         public async Task<UserDTO?> PostUser(UserDTO request)

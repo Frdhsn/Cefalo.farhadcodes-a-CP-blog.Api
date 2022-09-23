@@ -25,6 +25,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
         {
             return await _context.Users.FindAsync(id);
         }
+        public async Task<User?> GetUserByEmail(string email)
+        {
+            return await _context.Users.Where(x => x.Email == email).FirstOrDefaultAsync<User>();
+        }
         public async Task<User?> PostUser(User user)
         {
             _context.Users.Add(user);

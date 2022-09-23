@@ -1,4 +1,4 @@
-﻿using Cefalo.farhadcodes_a_CP_blog.Service.DTO;
+﻿using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Contracts
     {
         Task<List<UserDTO>> GetAllUsers();
         Task<UserDTO?> GetUser(int id);
+        Task<UserDTO?> GetUserByEmail(string email);
         Task<UserDTO?> PostUser(UserDTO user);
         Task<UserDTO?> UpdateUser(int id,UserDTO user);
         Task<Boolean> DeleteUser(int id);

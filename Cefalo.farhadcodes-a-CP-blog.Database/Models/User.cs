@@ -16,5 +16,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Models
 
         public DateTime CreationTime { get; set; }
         public DateTime LastModifiedTime { get; set; }
+
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
+
     }
 }

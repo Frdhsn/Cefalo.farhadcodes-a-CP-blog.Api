@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cefalo.farhadcodes_a_CP_blog.Service.DTO
+namespace Cefalo.farhadcodes_a_CP_blog.Service.DTO.User
 {
     public class UserDTO
     {
