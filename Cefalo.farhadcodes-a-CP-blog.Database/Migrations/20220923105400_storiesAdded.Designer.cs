@@ -4,6 +4,7 @@ using Cefalo.farhadcodes_a_CP_blog.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 {
     [DbContext(typeof(CPContext))]
-    partial class CPContextModelSnapshot : ModelSnapshot
+    [Migration("20220923105400_storiesAdded")]
+    partial class storiesAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

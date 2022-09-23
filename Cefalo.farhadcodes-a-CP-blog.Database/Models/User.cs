@@ -20,5 +20,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
 
+
+        public virtual ICollection<Story?> Stories { get; set; }
     }
 }
