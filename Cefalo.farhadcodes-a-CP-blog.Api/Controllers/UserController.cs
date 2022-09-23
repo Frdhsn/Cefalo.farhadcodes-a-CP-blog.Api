@@ -1,5 +1,5 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
-using Cefalo.farhadcodes_a_CP_blog.Service.DTO;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

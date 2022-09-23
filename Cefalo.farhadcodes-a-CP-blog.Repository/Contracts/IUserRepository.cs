@@ -11,6 +11,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Contracts
     {
         Task<List<User>> GetAllUsers();
         Task<User?> GetUser(int id);
+        Task<User?> GetUserByEmail(string email);
         Task<User?> PostUser(User user);
         Task<User?> UpdateUser(int id, User user);
         Task<Boolean> DeleteUser(int id);
