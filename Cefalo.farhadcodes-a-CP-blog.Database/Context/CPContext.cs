@@ -15,10 +15,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Context
         public CPContext(DbContextOptions<CPContext> options): base(options) { }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Story> Stories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            new UserConfiguration().Configure(builder.Entity<User>());
+            new UserConfig().Configure(builder.Entity<User>());
+            new StoryConfig().Configure(builder.Entity<Story>());
         }
     }
 }

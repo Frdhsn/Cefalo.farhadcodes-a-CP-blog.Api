@@ -34,10 +34,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             _passwordH.HashPassword(req.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var user = _mapper.Map<User>(req);
-            user.LastModifiedTime = DateTime.UtcNow;
-            user.CreationTime = DateTime.UtcNow;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            user.LastModifiedTime = DateTime.UtcNow;
+            user.CreationTime = DateTime.UtcNow;
 
             var newUser = await _userRepository.PostUser(user);
             var userDTO = _mapper.Map<UserDTO>(newUser);
