@@ -1,4 +1,6 @@
-﻿/*using Microsoft.AspNetCore.Http;
+﻿using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
@@ -15,40 +17,44 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
             }
 
             [HttpGet]
-            public async Task<ActionResult<IEnumerable<PostStoryDto>>> GetStories()
+            public async Task<ActionResult<IEnumerable<StoryDTO>>> GetStories()
             {
                 return Ok(await _storyService.GetStories());
             }
 
-            [HttpGet("{Id}")]
-            public async Task<IActionResult> GetStory(int Id)
+            [HttpGet("{id}")]
+            public async Task<IActionResult> GetStory(int id)
             {
-                var story = await _storyService.GetStoryById(Id);
-                if (story == null) return BadRequest("Story not found");
+                var story = await _storyService.GetStory(id);
+                if (story == null)
+                    return BadRequest("Story with this ID NOT FOUND!");
                 return Ok(story);
             }
             [HttpPost]
-            public async Task<IActionResult> PostStory(PostStoryDto postStoryDto)
+            public async Task<IActionResult> PostStory(StoryDTO body)
             {
-                var newStory = await _storyService.PostStory(postStoryDto);
-                if (newStory == null) return BadRequest("Cant post story");
-                return CreatedAtAction(nameof(PostStory), newStory);
+                var createdStory = await _storyService.CreateStory(body);
+                if (createdStory == null) return BadRequest("Something went wrong! Can't Create the story!");
+                return CreatedAtAction(nameof(PostStory), createdStory);
             }
 
-            [HttpPatch("{Id}")]
-            public async Task<IActionResult> UpdateStory(int Id, UpdateStoryDto updateStoryDto)
+            [HttpPatch("{id}")]
+            public async Task<IActionResult> UpdateStory(int id, UpdateStory body)
             {
-                if (Id != updateStoryDto.Id) return BadRequest("Id does not match");
-                var story = await _storyService.UpdateStory(Id, updateStoryDto);
-                if (story == null) return BadRequest("Story not found");
-                return Ok(story);
+                if (id != body.Id)
+                    return BadRequest("Something went wrong! IDs do not match!");
+                var updatedStory = await _storyService.UpdateStory(id, body);
+                if (updatedStory == null)
+                    return BadRequest("Something went wrong! This Story can not be found!");
+                return Ok(updatedStory);
             }
-            [HttpDelete("{Id}")]
-            public async Task<IActionResult> DeleteStory(int Id)
+            [HttpDelete("{id}")]
+            public async Task<IActionResult> DeleteStory(int id)
             {
-                var deleted = await _storyService.DeleteStory(Id);
-                if (!deleted) return BadRequest("Story not found");
+                var deleted = await _storyService.DeleteStory(id);
+                if (deleted == false)
+                    return BadRequest("Something went wrong! This Story can not be deleted!");
                 return NoContent();
             }
     }
-}*/
+}

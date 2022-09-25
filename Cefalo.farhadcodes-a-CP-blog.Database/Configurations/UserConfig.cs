@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Database.Configurations
 {
-    public class UserConfiguration: IEntityTypeConfiguration<User>
+    public class UserConfig: IEntityTypeConfiguration<User>
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
@@ -20,7 +20,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Configurations
 
             builder.Property(user => user.Email).IsRequired().HasMaxLength(256);
             builder.HasIndex(user => user.Email).IsUnique();
-            
+
+            builder.Property(user => user.PasswordHash).IsRequired();
+            builder.Property(user => user.PasswordSalt).IsRequired();
+
             builder.Property(user => user.CreationTime).IsRequired();
             
             builder.Property(user => user.LastModifiedTime).IsRequired();

@@ -40,12 +40,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+// User
 // repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 // services
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPassword, Password>();
+// Story
+builder.Services.AddScoped<IStoryRepository, StoryRepository>();
+builder.Services.AddScoped<IStoryService, StoryService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
