@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 {
     [DbContext(typeof(CPContext))]
-    [Migration("20220923105400_storiesAdded")]
-    partial class storiesAdded
+    [Migration("20220926060510_habijabi")]
+    partial class habijabi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AuthorID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -48,20 +51,18 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AuthorID");
 
-                    b.ToTable("Story");
+                    b.ToTable("Stories");
                 });
 
             modelBuilder.Entity("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", b =>
@@ -112,9 +113,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 
             modelBuilder.Entity("Cefalo.farhadcodes_a_CP_blog.Database.Models.Story", b =>
                 {
-                    b.HasOne("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", null)
+                    b.HasOne("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", "User")
                         .WithMany("Stories")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("AuthorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", b =>

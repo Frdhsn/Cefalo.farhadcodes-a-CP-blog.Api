@@ -38,11 +38,17 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
             var updatedStory = await _cpContext.Stories.FindAsync(id);
             if (updatedStory == null)
                 return null;
-            updatedStory.Title = body.Title;
-            updatedStory.Description = body.Description;
+            if(body.Title != null) updatedStory.Title = body.Title;
+
+            if (body.Description != null) updatedStory.Description = body.Description;
+
+            if (body.Difficulty != null) updatedStory.Difficulty = body.Difficulty;
+
+            if (body.Topic != null) updatedStory.Topic = body.Topic;
+
             updatedStory.LastModifiedTime = DateTime.UtcNow;
             await _cpContext.SaveChangesAsync();
-            return body;
+            return updatedStory;
         }
         public async Task<Boolean?> DeleteStory(int id)
         {

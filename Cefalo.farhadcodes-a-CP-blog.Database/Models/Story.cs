@@ -9,6 +9,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Models
     public class Story
     {
         public int Id { get; set; }
+        public int AuthorID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Topic { get; set; }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
 {
     [DbContext(typeof(CPContext))]
-    [Migration("20220925230252_storyDropLastf")]
-    partial class storyDropLastf
+    [Migration("20220926044506_v1")]
+    partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
             modelBuilder.Entity("Cefalo.farhadcodes_a_CP_blog.Database.Models.Story", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
@@ -53,6 +59,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
 
                     b.ToTable("Stories");
                 });
@@ -107,7 +115,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
                 {
                     b.HasOne("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", "User")
                         .WithMany("Stories")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AuthorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
