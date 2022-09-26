@@ -25,6 +25,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
             modelBuilder.Entity("Cefalo.farhadcodes_a_CP_blog.Database.Models.Story", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
@@ -51,6 +57,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorID");
 
                     b.ToTable("Stories");
                 });
@@ -105,7 +113,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Migrations
                 {
                     b.HasOne("Cefalo.farhadcodes_a_CP_blog.Database.Models.User", "User")
                         .WithMany("Stories")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("AuthorID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

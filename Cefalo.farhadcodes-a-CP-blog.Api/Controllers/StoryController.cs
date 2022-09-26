@@ -38,7 +38,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
                 return CreatedAtAction(nameof(PostStory), createdStory);
             }
 
-            [HttpPatch("{id}")]
+            [HttpPut("{id}")]
             public async Task<IActionResult> UpdateStory(int id, UpdateStory body)
             {
                 if (id != body.Id)

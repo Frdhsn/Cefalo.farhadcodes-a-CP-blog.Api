@@ -23,7 +23,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Database.Configurations
 
             builder.Property(story => story.LastModifiedTime).IsRequired();
 
-            builder.HasOne<User>(story => story.User).WithMany(user => user.Stories).HasForeignKey(user => user.Id);
+            builder.HasOne<User>(story => story.User).WithMany(user => user.Stories).HasForeignKey(user => user.AuthorID);
         }
 
     }
