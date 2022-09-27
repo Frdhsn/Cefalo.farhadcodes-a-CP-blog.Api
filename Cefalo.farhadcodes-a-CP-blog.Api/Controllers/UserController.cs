@@ -1,4 +1,5 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +55,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var deletedUser = await _userService.DeleteUser(id);
-            if (!deletedUser) return BadRequest("Something went wrong! Can't delete the user.");
+            if (!deletedUser) throw new BadRequestHandler("Something went wrong! Can't delete the user.");
             return NoContent();
         }
     }

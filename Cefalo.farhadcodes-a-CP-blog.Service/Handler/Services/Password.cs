@@ -43,7 +43,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.Name)
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
