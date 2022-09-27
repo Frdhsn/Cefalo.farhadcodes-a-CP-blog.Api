@@ -1,3 +1,4 @@
+using Cefalo.farhadcodes_a_CP_blog.Api.ErrorHandler;
 using Cefalo.farhadcodes_a_CP_blog.Database.Context;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Repositories;
@@ -50,6 +51,7 @@ builder.Services.AddScoped<IPassword, Password>();
 // Story
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<IStoryService, StoryService>();
+builder.Services.AddScoped<IJWTToken, JWTToken>();
 
 var app = builder.Build();
 
@@ -60,6 +62,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ConfigureExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
