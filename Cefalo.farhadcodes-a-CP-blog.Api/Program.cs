@@ -51,8 +51,8 @@ builder.Services.AddScoped<IPassword, Password>();
 // Story
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<IStoryService, StoryService>();
-builder.Services.AddScoped<IJWTToken, JWTToken>();
-
+//builder.Services.AddScoped<IJWTToken, JWTToken>();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -63,7 +63,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureExceptionHandler();
+
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Cefalo.farhadcodes-a-CP-blog.Database\Cefalo.farhadcodes-a-CP-blog.Database.csproj" />
+    <ProjectReference Include="..\Cefalo.farhadcodes-a-CP-blog.Repository\Cefalo.farhadcodes-a-CP-blog.Repository.csproj" />
     <ProjectReference Include="..\Cefalo.farhadcodes-a-CP-blog.Service\Cefalo.farhadcodes-a-CP-blog.Service.csproj" />
   </ItemGroup>
 

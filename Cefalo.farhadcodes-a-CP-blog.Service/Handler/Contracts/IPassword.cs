@@ -14,5 +14,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts
         bool VerifyHash(string password, byte[] passwordHash, byte[] passwordSalt);
 
         string CreateToken(User user);
+        string GetLoggedInEmail();
+        int GetLoggedInId();
+        string GetTokenCreationTime();
     }
 }
