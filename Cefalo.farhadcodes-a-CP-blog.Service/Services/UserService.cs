@@ -32,11 +32,15 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         public async Task<UserDTO?> GetUser(int id)
         {
             var user = await _userRepository.GetUser(id);
+
+            if (user == null) throw new NotFoundHandler("No user was found with that ID!");
             return _mapper.Map<UserDTO>(user);
         }
         public async Task<UserDTO?> GetUserByEmail(string email)
         {
             var user = await _userRepository.GetUserByEmail(email);
+
+            if (user == null) throw new NotFoundHandler("No user was found with that email!");
             return _mapper.Map<UserDTO>(user);
         }
         public async Task<UserDTO?> PostUser(UserDTO request)
@@ -51,12 +55,29 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 
         public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUserDto)
         {
-            //if (id != updateUserDto) return null;
+            var currUserId = _passwordH.GetLoggedInId();
+            if(currUserId == -1) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
+            if (currUserId != id) throw new ForbiddenHandler("You don't have the permission!");
+
+            var fetchedUser = await _userRepository.GetUser(id);
+
+            if (fetchedUser == null) throw new NotFoundHandler("No user was found with that ID!");
+            
+            var creationTime = _passwordH.GetTokenCreationTime();
+            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
+
+            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+
+            if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
+                throw new UnauthorisedHandler("JWT Expired! Login again!");
+
             User mappedUser = _mapper.Map<User>(updateUserDto);
+
             
             var updatedUser = await _userRepository.UpdateUser(id, mappedUser);
-            if (updatedUser == null) return null;
-            
+
+            if (updatedUser == null) throw new NotFoundHandler("No user was found with that ID!");
+
             var userDto = _mapper.Map<UserDTO>(updatedUser);
             return userDto;
         }
@@ -64,13 +85,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         {
             var fetchedUser = await _userRepository.GetUser(id);
 
-            if (fetchedUser == null) throw new NotFoundHandler("User NOT FOUND!");
-
-            var currUserEmail = _passwordH.GetLoggedInEmail();
-            if (currUserEmail != fetchedUser.Email) throw new UnauthorisedHandler("Not authorized!");
+            if (fetchedUser == null) throw new NotFoundHandler("No user was found with that ID!");
+            var currUserId = _passwordH.GetLoggedInId();
+            if (currUserId != id) throw new ForbiddenHandler("You don't have the permission!");
 
             var creationTime = _passwordH.GetTokenCreationTime();
-            if (creationTime == null) throw new UnauthorisedHandler("Login again");
+            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
 
             DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
 

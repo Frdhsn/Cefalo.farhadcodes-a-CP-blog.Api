@@ -2,6 +2,7 @@
 using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -48,9 +49,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             //var user = _mapper.Map<User>(req);
 
             var newUser = await _userRepository.GetUserByEmail(req.Email);
-            if (newUser == null) return null;
+            if (newUser == null) throw new UnauthorisedHandler("Incorrect email or password!");
             bool ret = _passwordH.VerifyHash(req.Password, newUser.PasswordHash, newUser.PasswordSalt);
-            if (!ret) return null;
+            if (!ret) throw new UnauthorisedHandler("Incorrect email or password!");
             string token = _passwordH.CreateToken(newUser);
             return token;
         }

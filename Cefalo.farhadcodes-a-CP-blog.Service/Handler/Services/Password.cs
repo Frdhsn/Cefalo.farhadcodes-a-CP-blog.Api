@@ -26,7 +26,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string GetLoggedInEmail()
+        /*public string GetLoggedInEmail()
         {
             var name = String.Empty;
             if (_httpContextAccessor.HttpContext != null)
@@ -35,7 +35,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
                 return name;
             }
             return name;
-        }
+        }*/
         public int GetLoggedInId()
         {
             int Id = -1;
@@ -78,7 +78,6 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Name, (user.Id).ToString()),
                 new Claim(ClaimTypes.Expiration, DateTime.UtcNow.ToString())
             };
