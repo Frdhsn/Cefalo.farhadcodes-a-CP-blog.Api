@@ -5,16 +5,24 @@ using System.Net;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Api.ErrorHandler
 {
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public static class GlobalErrorHandler
     {
+        public static int GetStatusCode(Type type)
+        {
+            if (type == typeof(BadRequestHandler)) return (int)HttpStatusCode.BadRequest;
+            else if (type == typeof(UnauthorisedHandler)) return (int)HttpStatusCode.Unauthorized;
+            else if (type == typeof(NotFoundHandler)) return (int)HttpStatusCode.NotFound;
+            else if (type == typeof(ForbiddenHandler)) return (int)HttpStatusCode.Forbidden;
+            else return (int)HttpStatusCode.InternalServerError;
+        }
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
         {
             app.UseExceptionHandler(appError =>
             {
                 appError.Run(async context =>
                 {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    //context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     context.Response.ContentType = "application/json";
                     var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
                     if (contextFeature != null)
@@ -40,13 +48,6 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.ErrorHandler
                 });
             });
         }
-        public static int GetStatusCode(Type type)
-        {
-            if (type == typeof(BadRequestHandler)) return (int)HttpStatusCode.BadRequest;
-            else if (type == typeof(UnauthorisedHandler)) return (int)HttpStatusCode.Unauthorized;
-            else if (type == typeof(NotFoundHandler)) return (int)HttpStatusCode.NotFound;
-            else if (type == typeof(ForbiddenHandler)) return (int)HttpStatusCode.Forbidden;
-            else return (int)HttpStatusCode.InternalServerError;
-        }
+        
     }
 }

@@ -18,12 +18,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IMapper _mapper;
         private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepository;
-        private readonly IJWTToken _jwtTokenHandler;
-        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper, IJWTToken jwtTokenHandler) { 
+        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper) { 
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordH = passwordH;
-            _jwtTokenHandler = jwtTokenHandler;
         }
 
         
@@ -64,37 +62,20 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         }
         public async Task<Boolean> DeleteUser(int id)
         {
-            //var fetchedUser = await _userRepository.GetUser(id);
-
-            //if (fetchedUser == null) throw new NotFoundHandler("User NOT FOUND!");
-
-            //var currUser = _jwtTokenHandler.GetLoggedInUser();
-            //if (currUser != fetchedUser.Name) throw new UnauthorisedHandler("Not authorized!");
-
-            //var creationTime = _jwtTokenHandler.GetTokenCreationTime();
-            //if (creationTime == null) throw new UnauthorisedHandler("Login again");
-
-            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
-
-            //if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
-            //    throw new UnauthorisedHandler("Login again!");
-
-            //return await _userRepository.DeleteUser(id);
             var fetchedUser = await _userRepository.GetUser(id);
 
             if (fetchedUser == null) throw new NotFoundHandler("User NOT FOUND!");
 
-            //var currUser = _jwtTokenHandler.GetLoggedInUser();
-            //if (currUser != fetchedUser.Name) throw new UnauthorisedHandler("Not authorized!");
+            var currUserEmail = _passwordH.GetLoggedInEmail();
+            if (currUserEmail != fetchedUser.Email) throw new UnauthorisedHandler("Not authorized!");
 
-            //var creationTime = _jwtTokenHandler.GetTokenCreationTime();
-            //if (creationTime == null) throw new UnauthorisedHandler("Login again");
+            var creationTime = _passwordH.GetTokenCreationTime();
+            if (creationTime == null) throw new UnauthorisedHandler("Login again");
 
-            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
 
-            //if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
-            //    throw new UnauthorisedHandler("Login again!");
-
+            if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
+                throw new UnauthorisedHandler("JWT Expired! Login again!");
             return await _userRepository.DeleteUser(id);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -17,10 +18,44 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
     public class Password: IPassword
     {
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public Password(IConfiguration config)
+        public Password(IConfiguration config, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = config;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public string GetLoggedInEmail()
+        {
+            var name = String.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                name = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+                return name;
+            }
+            return name;
+        }
+        public int GetLoggedInId()
+        {
+            int Id = -1;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                Id = Int32.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value);
+                //return name;
+            }
+            return Id;
+        }
+
+        public string GetTokenCreationTime()
+        {
+            var creationTime = String.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                creationTime = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Expiration).Value;
+                return creationTime;
+            }
+            return creationTime;
         }
         public void HashPassword(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
@@ -44,7 +79,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Name)
+                new Claim(ClaimTypes.Name, (user.Id).ToString()),
+                new Claim(ClaimTypes.Expiration, DateTime.UtcNow.ToString())
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
