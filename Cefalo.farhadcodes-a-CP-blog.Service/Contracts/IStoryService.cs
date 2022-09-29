@@ -11,8 +11,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Contracts
     public interface IStoryService
     {
 
-        Task<List<StoryDTO>> GetStories();
-        Task<Story> GetStory(int id);
+        Task<List<ShowStoryDTO>> GetStories();
+        Task<ShowStoryDTO> GetStory(int id);
         Task<Story> CreateStory(StoryDTO body);
         Task<Story> UpdateStory(int id, UpdateStory body);
         Task<bool?> DeleteStory(int id);

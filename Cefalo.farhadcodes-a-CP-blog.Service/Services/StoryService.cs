@@ -26,17 +26,19 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             _passwordH = password;
         }
 
-        public async Task<List<StoryDTO>> GetStories()
+        public async Task<List<ShowStoryDTO>> GetStories()
         {
             var stories = await _storyRepository.GetStories();
-            return stories.Select(story => _mapper.Map<StoryDTO>(story)).ToList();
+            return stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
         }
 
-        public async Task<Story> GetStory(int id)
+        public async Task<ShowStoryDTO> GetStory(int id)
         {
             var story = await _storyRepository.GetStory(id);
+
             if (story == null) throw new NotFoundHandler("No Story was found with that Id");
-            return story;
+       
+            return _mapper.Map<ShowStoryDTO>(story);
         }
 
         public async Task<Story> CreateStory(StoryDTO body)

@@ -3,9 +3,9 @@ using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 
-namespace Cefalo.farhadcodes_a_CP_blog.Service
+namespace Cefalo.farhadcodes_a_CP_blog.Service.AutoMapper
 {
-    public class AutoMapperProfile: Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
@@ -15,6 +15,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service
             //story
             CreateMap<StoryDTO, Story>().ReverseMap();
             CreateMap<UpdateStory, Story>();
+            CreateMap<ShowStoryDTO, Story>().ReverseMap();
         }
 
     }

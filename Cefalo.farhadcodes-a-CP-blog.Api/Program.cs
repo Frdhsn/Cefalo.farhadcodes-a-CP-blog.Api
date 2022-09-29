@@ -3,6 +3,7 @@ using Cefalo.farhadcodes_a_CP_blog.Database.Context;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Repositories;
 using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.Formatters;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services;
 using Cefalo.farhadcodes_a_CP_blog.Service.Services;
@@ -25,6 +26,16 @@ builder.Services.AddDbContext<CPContext>(options =>
 //for auto mapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+}).AddXmlDataContractSerializerFormatters()
+            .AddMvcOptions(option =>
+            {
+                option.OutputFormatters.Add(new CSVOutputFormatter());
+                option.OutputFormatters.Add(new PlainTextOutputFormatter());
+                option.OutputFormatters.Add(new HtmlOutputFormatter());
+            });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
