@@ -3,10 +3,14 @@ using Cefalo.farhadcodes_a_CP_blog.Database.Context;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Repositories;
 using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTOValidators;
 using Cefalo.farhadcodes_a_CP_blog.Service.Formatters;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services;
 using Cefalo.farhadcodes_a_CP_blog.Service.Services;
+using Cefalo.TechDaily.Service.DtoValidators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -62,7 +66,13 @@ builder.Services.AddScoped<IPassword, Password>();
 // Story
 builder.Services.AddScoped<IStoryRepository, StoryRepository>();
 builder.Services.AddScoped<IStoryService, StoryService>();
-//builder.Services.AddScoped<IJWTToken, JWTToken>();
+
+// dtovalidators
+builder.Services.AddScoped<BaseDTOValidator<LoginDTO>, LoginDTOValidator>();
+builder.Services.AddScoped<BaseDTOValidator<SignUpDTO>, SignUpDTOValidator>();
+builder.Services.AddScoped<BaseDTOValidator<StoryDTO>, StoryDTOValidator>();
+builder.Services.AddScoped<BaseDTOValidator<UpdateStory>, UpdateStoryValidator>();
+builder.Services.AddScoped<BaseDTOValidator<UserDTO>, UserDTOValidator>();
 builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 

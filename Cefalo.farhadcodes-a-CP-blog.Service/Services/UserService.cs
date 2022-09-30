@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
+using Cefalo.TechDaily.Service.DtoValidators;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 {
@@ -18,10 +20,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IMapper _mapper;
         private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper) { 
+        private readonly BaseDTOValidator<UserDTO> _userdtovalidator;
+        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper, BaseDTOValidator<UserDTO> userdtovalidator) { 
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordH = passwordH;
+            _userdtovalidator = userdtovalidator;
         }
 
         
@@ -45,6 +49,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         }
         public async Task<UserDTO?> PostUser(UserDTO request)
         {
+            _userdtovalidator.Validate(request);
+
             var user = _mapper.Map<User>(request);
             user.LastModifiedTime = DateTime.UtcNow;
             user.CreationTime = DateTime.UtcNow;
@@ -55,6 +61,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 
         public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUserDto)
         {
+            _userdtovalidator.Validate(updateUserDto);
+
             var currUserId = _passwordH.GetLoggedInId();
             if(currUserId == -1) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
             if (currUserId != id) throw new ForbiddenHandler("You don't have the permission!");
