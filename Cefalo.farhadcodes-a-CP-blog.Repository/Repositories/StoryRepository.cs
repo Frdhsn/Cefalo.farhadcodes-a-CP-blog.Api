@@ -21,6 +21,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
         {
             return await _cpContext.Stories.ToListAsync();
         }
+        public async Task<List<Story>> GetPaginatedStories(int PageNumber, int PageSize)
+        {
+            return await _cpContext.Stories.Skip((PageNumber-1)*PageSize).Take(PageSize).ToListAsync();
+        }
         public async Task<Story?> GetStory(int id)
         {
             return await _cpContext.Stories.FindAsync(id);

@@ -1,5 +1,6 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
+using Cefalo.farhadcodes_a_CP_blog.Service.Wrappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
             {
                 return Ok(await _storyService.GetStories());
             }
-
+            [HttpGet]
+            public async Task<IActionResult> GetPaginatedStories([FromQuery] PaginationFilter filter)
+            {
+                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+                var response = await _storyService.GetPaginatedStories(validFilter.PageNumber,validFilter.PageSize);
+                return Ok(response);
+            }
             [HttpGet("{id}")]
             public async Task<IActionResult> GetStory(int id)
             {

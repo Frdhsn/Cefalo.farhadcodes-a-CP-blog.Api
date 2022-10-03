@@ -12,6 +12,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Contracts
     {
 
         Task<List<ShowStoryDTO>> GetStories();
+        Task<List<ShowStoryDTO>> GetPaginatedStories(int PageNumber, int PageSize);
         Task<ShowStoryDTO> GetStory(int id);
         Task<Story> CreateStory(StoryDTO body);
         Task<Story> UpdateStory(int id, UpdateStory body);
