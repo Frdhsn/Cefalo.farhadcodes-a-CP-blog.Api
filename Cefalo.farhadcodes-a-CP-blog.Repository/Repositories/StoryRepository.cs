@@ -21,6 +21,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
         {
             return await _cpContext.Stories.ToListAsync();
         }
+        public async Task<List<Story>> GetStoriesByUser(int id)
+        {
+            return await _cpContext.Stories.Where(c => c.AuthorID == id).ToListAsync();
+        }
         public async Task<Story?> GetStory(int id)
         {
             return await _cpContext.Stories.FindAsync(id);

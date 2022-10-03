@@ -21,8 +21,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
             {
                 return Ok(await _storyService.GetStories());
             }
+            [HttpGet("user/{id}")]
+            public async Task<ActionResult<IEnumerable<StoryDTO>>> GetStoriesByUser(int id)
+            {
+                return Ok(await _storyService.GetStoriesByUser(id));
+            }
 
-            [HttpGet("{id}")]
+        [HttpGet("{id}")]
             public async Task<IActionResult> GetStory(int id)
             {
                 var story = await _storyService.GetStory(id);
