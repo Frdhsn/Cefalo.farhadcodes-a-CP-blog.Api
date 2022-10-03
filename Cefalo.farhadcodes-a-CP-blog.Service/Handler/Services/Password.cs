@@ -94,7 +94,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
 
             var finalToken = new JwtSecurityTokenHandler().WriteToken(token);
             //var ret = JSON
-            return JsonConvert.SerializeObject(finalToken);
+            //return JsonConvert.SerializeObject(finalToken).ToString();
+            return finalToken;
         }
     }
 }

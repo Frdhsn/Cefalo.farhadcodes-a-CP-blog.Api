@@ -50,7 +50,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             var userDTO = _mapper.Map<UserDTO>(newUser);
             return userDTO;
         }
-        public async Task<string?> Login(LoginDTO req)
+        public async Task<UserDTO> Login(LoginDTO req)
         {
             _logindtovalidator.ValidateDTO(req);
 
@@ -58,8 +58,11 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             if (newUser == null) throw new UnauthorisedHandler("Incorrect email or password!");
             bool ret = _passwordH.VerifyHash(req.Password, newUser.PasswordHash, newUser.PasswordSalt);
             if (!ret) throw new UnauthorisedHandler("Incorrect email or password!");
-            string token = _passwordH.CreateToken(newUser);
-            return token;
+            var token = _passwordH.CreateToken(newUser);
+            
+            var userDTO = _mapper.Map<UserDTO>(newUser);
+            userDTO.Token = token;
+            return userDTO;
         }
 
     }

@@ -11,7 +11,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.DTO.User
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        //public string Password { get; set; }
+        public string Token { get; set; }
         public DateTime CreationTime { get; set; }
         public DateTime LastModifiedTime { get; set; }
     }

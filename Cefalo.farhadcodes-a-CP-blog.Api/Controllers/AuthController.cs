@@ -31,15 +31,15 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
             return CreatedAtAction(nameof(SignUp), userDTO.Id, userDTO);
         }
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(LoginDTO req)
+        public async Task<ActionResult<UserDTO>> Login(LoginDTO req)
         {
 
-            var token = await _authService.Login(req);
+            var userDTO = await _authService.Login(req);
 
-            if (token == null)
+            if (userDTO == null)
                 return BadRequest("Something went wrong! Can't login!");
 
-            return token;
+            return userDTO;
         }
 
 

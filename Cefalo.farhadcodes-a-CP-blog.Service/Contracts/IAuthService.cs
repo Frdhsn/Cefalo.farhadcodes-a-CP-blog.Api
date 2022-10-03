@@ -9,7 +9,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Contracts
 {
     public interface IAuthService
     {
-        Task<string?> Login(LoginDTO req);
-        Task<UserDTO?> SignUp(SignUpDTO req);
+        Task<UserDTO> Login(LoginDTO req);
+        Task<UserDTO> SignUp(SignUpDTO req);
     }
 }
