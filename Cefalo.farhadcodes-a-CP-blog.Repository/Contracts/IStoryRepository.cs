@@ -10,7 +10,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Contracts
     public interface IStoryRepository
     {
         Task<List<Story>> GetStories();
+        Task<List<Story>> GetStoriesByUser(int id);
         Task<Story?> GetStory(int id);
+
         Task<Story?> CreateStory(Story body);
         Task<Story?> UpdateStory(int id,Story body);
         Task<Boolean?> DeleteStory(int id);
