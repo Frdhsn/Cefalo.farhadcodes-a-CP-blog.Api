@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Cefalo.farhadcodes-a-CP-blog.Repository\Cefalo.farhadcodes-a-CP-blog.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Wrappers\" />
+  </ItemGroup>
+
 </Project>

@@ -38,6 +38,11 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             var stories = await _storyRepository.GetStories();
             return stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
         }
+        public async Task<List<ShowStoryDTO>> GetPaginatedStories(int PageNumber,int PageSize)
+        {
+            var stories = await _storyRepository.GetPaginatedStories(PageNumber,PageSize);
+            return stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
+        }
         public async Task<List<ShowStoryDTO>> GetStoriesByUser(int id)
         {
             var stories = await _storyRepository.GetStoriesByUser(id);

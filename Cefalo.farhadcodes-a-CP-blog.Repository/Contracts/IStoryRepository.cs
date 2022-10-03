@@ -11,6 +11,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Contracts
     {
         Task<List<Story>> GetStories();
         Task<List<Story>> GetStoriesByUser(int id);
+        Task<List<Story>> GetPaginatedStories(int PageNumber, int PageSize);
         Task<Story?> GetStory(int id);
 
         Task<Story?> CreateStory(Story body);
