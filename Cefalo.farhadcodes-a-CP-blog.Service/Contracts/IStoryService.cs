@@ -1,5 +1,6 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
+using Cefalo.farhadcodes_a_CP_blog.Service.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Contracts
     {
 
         Task<List<ShowStoryDTO>> GetStories();
-        Task<List<ShowStoryDTO>> GetPaginatedStories(int PageNumber, int PageSize);
+        Task<PagedResponse<List<ShowStoryDTO>>> GetPaginatedStories(PaginationFilter validFilter);
         Task<List<ShowStoryDTO>> GetStoriesByUser(int id);
         Task<ShowStoryDTO> GetStory(int id);
         Task<Story> CreateStory(StoryDTO body);

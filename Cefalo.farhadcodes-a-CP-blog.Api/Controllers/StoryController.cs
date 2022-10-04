@@ -17,13 +17,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
                 _storyService = storyService;
             }
 
-            [HttpGet]
-            public async Task<ActionResult<IEnumerable<StoryDTO>>> GetStories()
+            [HttpGet("user/{id}")]
+            public async Task<ActionResult<IEnumerable<StoryDTO>>> GetStoriesByUser(int id)
             {
-                return Ok(await _storyService.GetStories());
+                return Ok(await _storyService.GetStoriesByUser(id));
             }
 
-            [HttpGet("{id}")]
+        [HttpGet("{id}")]
             public async Task<IActionResult> GetStory(int id)
             {
                 var story = await _storyService.GetStory(id);
@@ -57,12 +57,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Api.Controllers
                     return BadRequest("Something went wrong! This Story can not be deleted!");
                 return NoContent();
             }
-        [HttpGet]
-        public async Task<IActionResult> GetPaginatedStories([FromQuery] PaginationFilter filter)
-        {
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var response = await _storyService.GetPaginatedStories(validFilter.PageNumber, validFilter.PageSize);
-            return Ok(response);
-        }
+            [HttpGet]
+            public async Task<IActionResult> GetPaginatedStories([FromQuery] PaginationFilter filter)
+            {
+                var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+                var response = await _storyService.GetPaginatedStories(validFilter);
+                return Ok(response);
+            }
     }
 }

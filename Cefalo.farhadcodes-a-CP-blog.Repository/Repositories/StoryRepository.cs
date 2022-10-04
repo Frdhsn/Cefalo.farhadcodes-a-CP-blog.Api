@@ -67,5 +67,9 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
             await _cpContext.SaveChangesAsync();
             return true;
         }
+        public async Task<int> CountStory()
+        {
+            return await _cpContext.Stories.CountAsync();
+        }
     }
 }

@@ -7,7 +7,11 @@ using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services;
+using Cefalo.farhadcodes_a_CP_blog.Service.Helper;
+using Cefalo.farhadcodes_a_CP_blog.Service.Wrappers;
 using Cefalo.TechDaily.Service.DtoValidators;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +25,19 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IStoryRepository _storyRepository;
         private readonly IMapper _mapper;
         private readonly IPassword _passwordH;
-
+        private readonly IUriService _uriService;
         private readonly BaseDTOValidator<UpdateStory> _updatestorydtovalidator;
         private readonly BaseDTOValidator<StoryDTO> _storydtovalidator;
-        public StoryService(IStoryRepository storyRepository, IMapper mapper, IPassword password, BaseDTOValidator<UpdateStory> updatestorydtovalidator, BaseDTOValidator<StoryDTO> storydtovalidator)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public StoryService(IHttpContextAccessor httpContextAccessor,IUriService uriService,IStoryRepository storyRepository, IMapper mapper, IPassword password, BaseDTOValidator<UpdateStory> updatestorydtovalidator, BaseDTOValidator<StoryDTO> storydtovalidator)
         {
             _storyRepository = storyRepository;
             _mapper = mapper;
             _passwordH = password;
             _updatestorydtovalidator = updatestorydtovalidator;
             _storydtovalidator = storydtovalidator;
+            _uriService = uriService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<ShowStoryDTO>> GetStories()
@@ -38,10 +45,14 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             var stories = await _storyRepository.GetStories();
             return stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
         }
-        public async Task<List<ShowStoryDTO>> GetPaginatedStories(int PageNumber,int PageSize)
+        public async Task<PagedResponse<List<ShowStoryDTO>>> GetPaginatedStories(PaginationFilter validFilter)
         {
-            var stories = await _storyRepository.GetPaginatedStories(PageNumber,PageSize);
-            return stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
+            var route = _httpContextAccessor.HttpContext.Request.Path.Value;
+            var stories = await _storyRepository.GetPaginatedStories(validFilter.PageNumber,validFilter.PageSize);
+            var response = stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
+            var totalRecords = await _storyRepository.CountStory();
+            var pagedReponse = PaginationHelper.CreatePagedReponse<ShowStoryDTO>(response, validFilter, totalRecords, _uriService, route);
+            return pagedReponse;
         }
         public async Task<List<ShowStoryDTO>> GetStoriesByUser(int id)
         {
