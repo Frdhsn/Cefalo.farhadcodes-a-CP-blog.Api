@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
 });
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 
 // Added this block
 builder.Services.AddDbContext<CPContext>(options =>
@@ -38,18 +38,19 @@ builder.Services.AddDbContext<CPContext>(options =>
 //for auto mapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddControllers(config =>
-{
-    config.RespectBrowserAcceptHeader = true;
-}).AddXmlDataContractSerializerFormatters()
-            .AddMvcOptions(option =>
-            {
-                option.OutputFormatters.Add(new CSVOutputFormatter());
-                option.OutputFormatters.Add(new PlainTextOutputFormatter());
-                option.OutputFormatters.Add(new HtmlOutputFormatter());
-            });
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<IUriService>(o =>
+{
+    var accessor = o.GetRequiredService<IHttpContextAccessor>();
+    var request = accessor.HttpContext.Request;
+    var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+    return new UriService(uri);
+});
+
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -81,7 +82,17 @@ builder.Services.AddScoped<BaseDTOValidator<SignUpDTO>, SignUpDTOValidator>();
 builder.Services.AddScoped<BaseDTOValidator<StoryDTO>, StoryDTOValidator>();
 builder.Services.AddScoped<BaseDTOValidator<UpdateStory>, UpdateStoryValidator>();
 builder.Services.AddScoped<BaseDTOValidator<UserDTO>, UserDTOValidator>();
-builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+}).AddXmlDataContractSerializerFormatters()
+            .AddMvcOptions(option =>
+            {
+                option.OutputFormatters.Add(new CSVOutputFormatter());
+                option.OutputFormatters.Add(new PlainTextOutputFormatter());
+                option.OutputFormatters.Add(new HtmlOutputFormatter());
+            });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

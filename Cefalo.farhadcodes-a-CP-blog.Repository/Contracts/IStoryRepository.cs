@@ -17,6 +17,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Contracts
         Task<Story?> CreateStory(Story body);
         Task<Story?> UpdateStory(int id,Story body);
         Task<Boolean?> DeleteStory(int id);
+        Task<int> CountStory();
 
     }
 }
