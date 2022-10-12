@@ -1,17 +1,17 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
 using FluentValidation;
-using Microsoft.IdentityModel.SecurityTokenService;
+//using Microsoft.IdentityModel.SecurityTokenService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cefalo.TechDaily.Service.DtoValidators
+namespace Cefalo.farhadcodes_a_CP_blog.Service.DTOValidators
 {
     public class BaseDTOValidator<T> : AbstractValidator<T>
     {
-        public void ValidateDTO(T DTO)
+        public virtual void ValidateDTO(T DTO)
         {
             var result = this.Validate(DTO);
             string err = "";

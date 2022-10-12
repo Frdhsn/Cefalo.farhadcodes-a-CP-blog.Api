@@ -6,7 +6,6 @@ using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.User;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTOValidators;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
-using Cefalo.TechDaily.Service.DtoValidators;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
