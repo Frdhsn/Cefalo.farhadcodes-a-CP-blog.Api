@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Api", "Cefalo.farhadcodes-a-CP-blog.Api\Cefalo.farhadcodes-a-CP-blog.Api.csproj", "{00510ED5-7DE7-4496-8653-02F9167BCAD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cefalo.farhadcodes-a-CP-blog.Api", "Cefalo.farhadcodes-a-CP-blog.Api\Cefalo.farhadcodes-a-CP-blog.Api.csproj", "{00510ED5-7DE7-4496-8653-02F9167BCAD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Database", "Cefalo.farhadcodes-a-CP-blog.Database\Cefalo.farhadcodes-a-CP-blog.Database.csproj", "{3D26203D-F06F-4C6C-A0B8-2472EF446556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cefalo.farhadcodes-a-CP-blog.Database", "Cefalo.farhadcodes-a-CP-blog.Database\Cefalo.farhadcodes-a-CP-blog.Database.csproj", "{3D26203D-F06F-4C6C-A0B8-2472EF446556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Service", "Cefalo.farhadcodes-a-CP-blog.Service\Cefalo.farhadcodes-a-CP-blog.Service.csproj", "{6CE894EA-08B3-4227-82EE-107C02198BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cefalo.farhadcodes-a-CP-blog.Service", "Cefalo.farhadcodes-a-CP-blog.Service\Cefalo.farhadcodes-a-CP-blog.Service.csproj", "{6CE894EA-08B3-4227-82EE-107C02198BA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Repository", "Cefalo.farhadcodes-a-CP-blog.Repository\Cefalo.farhadcodes-a-CP-blog.Repository.csproj", "{A0926FE0-116A-4D35-9F15-832B7FF12A02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cefalo.farhadcodes-a-CP-blog.Repository", "Cefalo.farhadcodes-a-CP-blog.Repository\Cefalo.farhadcodes-a-CP-blog.Repository.csproj", "{A0926FE0-116A-4D35-9F15-832B7FF12A02}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cefalo.farhadcodes-a-CP-blog.Service.UnitTests", "Cefalo.farhadcodes-a-CP-blog.Service.UnitTests\Cefalo.farhadcodes-a-CP-blog.Service.UnitTests.csproj", "{A48AE4CE-65A2-4FC4-A74D-207005733CF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0926FE0-116A-4D35-9F15-832B7FF12A02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48AE4CE-65A2-4FC4-A74D-207005733CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48AE4CE-65A2-4FC4-A74D-207005733CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48AE4CE-65A2-4FC4-A74D-207005733CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48AE4CE-65A2-4FC4-A74D-207005733CF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

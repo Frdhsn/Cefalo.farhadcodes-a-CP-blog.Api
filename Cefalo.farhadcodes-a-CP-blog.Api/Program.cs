@@ -10,7 +10,6 @@ using Cefalo.farhadcodes_a_CP_blog.Service.Formatters;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services;
 using Cefalo.farhadcodes_a_CP_blog.Service.Services;
-using Cefalo.TechDaily.Service.DtoValidators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

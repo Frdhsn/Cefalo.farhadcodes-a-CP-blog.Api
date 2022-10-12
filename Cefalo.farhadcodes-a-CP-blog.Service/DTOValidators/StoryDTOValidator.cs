@@ -1,5 +1,5 @@
 ﻿using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
-using Cefalo.TechDaily.Service.DtoValidators;
+using Cefalo.farhadcodes_a_CP_blog.Service.DTOValidators;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
