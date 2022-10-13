@@ -10,6 +10,7 @@ using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services;
 using Cefalo.farhadcodes_a_CP_blog.Service.Services;
 using Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures;
+using Cefalo.farhadcodes_a_CP_blog.Service.Wrappers;
 using FakeItEasy;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
@@ -38,10 +39,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
         // dummy stories
         private readonly Story dummystory;
         private readonly DummyStories dummystories;
+        private readonly List<Story> storiesByUser1;
         // dummy DTOS
         private readonly StoryDTO _storyDTOStub;
         private readonly ShowStoryDTO _showStoryDTOStub;
         private readonly UpdateStory _updateStoryDTOStub;
+        // pagination filter
+        private readonly PaginationFilter dummypgfilter;
         #region Constructor
         public StoryServiceUnitTests()
         {
@@ -62,11 +66,14 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             // dummy stories
             dummystories = A.Fake<DummyStories>();
             dummystory = dummystories.dummystory1;
+            storiesByUser1 = dummystories.storiesByUser;
+            
             // DTOs
             _storyDTOStub = dummystories.dummyStoryDTO;
             _showStoryDTOStub = dummystories.dummyShowStoryDTO;
             _updateStoryDTOStub = dummystories.dummyUpdateStoryDTO;
-
+            // pagination filter
+            dummypgfilter = new PaginationFilter(1, 4);
         }
         #endregion
 
@@ -86,6 +93,57 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             Assert.Equal(mappedlist,stories);
         }
         #endregion
+
+        #region GetPaginatedStories
+        [Fact]
+        public async void GetPaginatedStories_WithValidParameter_GetPaginatedStoriesIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetPaginatedStories(dummypgfilter.PageNumber,dummypgfilter.PageSize)).Returns(storiesByUser1);
+            //Act
+            var myStoryList = await _storyServiceStub.GetPaginatedStories(dummypgfilter);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.GetPaginatedStories(dummypgfilter.PageNumber, dummypgfilter.PageSize)).MustHaveHappenedOnceExactly();
+        }
+        //[Fact]
+        //public async void GetPaginatedStories_WithValidParameter_ReturnedStoryListIsValid()
+        //{
+        //    //Arrange
+
+        //    var listOfStories = new List<Story>();
+        //    A.CallTo(() => _storyRepositoryStub.GetPaginatedStories(dummypgfilter.PageNumber, dummypgfilter.PageSize)).Returns(listOfStories);
+        //    var mappedlist = listOfStories.Select(story => _mapperStub.Map<ShowStoryDTO>(story)).ToList();
+        //    //Act
+        //    var myStoryList = await _storyServiceStub.GetPaginatedStories(dummypgfilter);
+        //    //Assert
+        //    Assert.Equal(mappedlist, myStoryList);
+        //}
+        #endregion
+        #region GetStoriesByUser
+        [Fact]
+        public async void GetStoriesByUser_WithValidParameter_GetStoryByUserIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStoriesByUser(dummystory.AuthorID)).Returns(storiesByUser1);
+            A.CallTo(() => _mapperStub.Map<ShowStoryDTO>(dummystory)).Returns(_showStoryDTOStub);
+            //Act
+            var myStoryList = await _storyServiceStub.GetStoriesByUser(dummystory.AuthorID);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.GetStoriesByUser(dummystory.AuthorID)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void GetStoriesByUser_WithValidParameter_ReturnedStoryListIsValid()
+        {
+            //Arrange
+            var listOfStories = new List<Story>();
+            A.CallTo(() => _storyRepositoryStub.GetStoriesByUser(dummystory.AuthorID)).Returns(listOfStories);
+            var mappedlist = listOfStories.Select(story => _mapperStub.Map<ShowStoryDTO>(story)).ToList();
+            //Act
+            var myStoryList = await _storyServiceStub.GetStoriesByUser(dummystory.AuthorID);
+            //Assert
+            Assert.Equal(mappedlist, myStoryList);
+        }
+        #endregion 
 
         #region GetStory
 

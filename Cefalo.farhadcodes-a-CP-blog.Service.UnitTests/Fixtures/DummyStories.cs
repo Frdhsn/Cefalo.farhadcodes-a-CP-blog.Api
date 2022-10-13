@@ -13,7 +13,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
     {
         public Story dummystory1;
         public Story dummystory2;
+        public Story dummystory3;
+
         public List<Story> stories;
+        public List<Story> storiesByUser;
 
         public StoryDTO dummyStoryDTO;
         public ShowStoryDTO dummyShowStoryDTO;
@@ -43,9 +46,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
             dummystory2.LastModifiedTime = DateTime.Now;
 
             // creating a list
-            stories = new List<Story>{ dummystory1};
+            stories = new List<Story> { dummystory1 };
             stories.Add(dummystory1);
             stories.Add(dummystory2);
+            // creating a list
+            storiesByUser = new List<Story> { dummystory1 };
+            storiesByUser.Add(dummystory1);
 
             dummyShowStoryDTO = A.Fake<ShowStoryDTO>(y => y.WithArgumentsForConstructor(() => new ShowStoryDTO()));
             dummyShowStoryDTO.Id = 1;
