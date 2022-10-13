@@ -12,8 +12,11 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
     public class DummyUser
     {
 
-        public User dummyUser;
-        public UserDTO dummyUserDTO;
+        public User dummyUser,dummyUser2;
+        public List<User> dummyUserList;
+        public UserDTO dummyUserDTO, dummyUserDTO2;
+        public List<UserDTO> dummyUserDTOList;
+
         public SignUpDTO dummySignUpDTO;
         public LoginDTO dummyLoginDTO;
         public DummyUser()
@@ -29,6 +32,21 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
             dummyUser.LastModifiedTime = DateTime.Now;
 
 
+            dummyUser2 = A.Fake<User>(y => y.WithArgumentsForConstructor(() => new User()));
+            dummyUser2.Id = 2;
+            dummyUser2.Name = "Ronaldo";
+            dummyUser2.Email = "ronaldo@gmail.com";
+
+            dummyUser2.PasswordHash = new byte[10];
+            dummyUser2.PasswordSalt = new byte[5];
+            dummyUser2.CreationTime = DateTime.Now;
+            dummyUser2.LastModifiedTime = DateTime.Now;
+
+
+            dummyUserList = new List<User>();
+            dummyUserList.Add(dummyUser);
+            dummyUserList.Add(dummyUser2);
+
             dummyUserDTO = A.Fake<UserDTO>(y => y.WithArgumentsForConstructor(() => new UserDTO()));
             dummyUserDTO.Id = 1;
             dummyUserDTO.Name = "Messi";
@@ -36,6 +54,19 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
             dummyUserDTO.Token = "brokenheartedhooverfixersuckerguy";
             dummyUserDTO.CreationTime = DateTime.Now;
             dummyUserDTO.LastModifiedTime = DateTime.Now;
+
+            dummyUserDTO2 = A.Fake<UserDTO>(y => y.WithArgumentsForConstructor(() => new UserDTO()));
+            dummyUserDTO2.Id = 2;
+            dummyUserDTO2.Name = "Ronaldo";
+            dummyUserDTO2.Email = "ronaldo@gmail.com";
+            dummyUserDTO2.Token = "brokenheartedhooverfixersuckerguy";
+            dummyUserDTO2.CreationTime = DateTime.Now;
+            dummyUserDTO2.LastModifiedTime = DateTime.Now;
+
+
+            dummyUserDTOList = new List<UserDTO>();
+            dummyUserDTOList.Add(dummyUserDTO);
+            dummyUserDTOList.Add(dummyUserDTO2);
 
             dummyLoginDTO = A.Fake<LoginDTO>(x => x.WithArgumentsForConstructor(() => new LoginDTO()));
             dummyLoginDTO.Email = "messi";

@@ -49,7 +49,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         }
         public async Task<UserDTO?> PostUser(UserDTO request)
         {
-            _userdtovalidator.Validate(request);
+            _userdtovalidator.ValidateDTO(request);
 
             var user = _mapper.Map<User>(request);
             user.LastModifiedTime = DateTime.UtcNow;
@@ -61,7 +61,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 
         public async Task<UserDTO?> UpdateUser(int id, UserDTO updateUserDto)
         {
-            _userdtovalidator.Validate(updateUserDto);
+            _userdtovalidator.ValidateDTO(updateUserDto);
 
             var currUserId = _passwordH.GetLoggedInId();
             if(currUserId == -1) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
