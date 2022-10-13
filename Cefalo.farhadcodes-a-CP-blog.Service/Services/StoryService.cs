@@ -84,19 +84,23 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         {
             _updatestorydtovalidator.ValidateDTO(body);
 
-            if (id != body.Id) throw new BadRequestHandler("Bad request!");
+            if (id != body.Id) throw new BadRequestHandler("Bad request! Story Id doesn't match!");
             // no story exists
             var fetchedStory = await _storyRepository.GetStory(id);
             if(fetchedStory == null) throw new NotFoundHandler("No Story was found with that Id");
+
+            var currUserId = _passwordH.GetLoggedInId();
+            if(currUserId != fetchedStory.AuthorID) throw new ForbiddenHandler("You don't have the permission!");
             // authorization
             var creationTime = _passwordH.GetTokenCreationTime();
             if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
-            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+            
+            // jwt token expiration check
+            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
 
-            if (tokenCreationTime.ToOADate() + 86400000 < fetchedStory.LastModifiedTime.ToOADate())
-                throw new UnauthorisedHandler("JWT Expired! Login again!");
-            var currUserId = _passwordH.GetLoggedInId();
-            if(currUserId != fetchedStory.AuthorID) throw new ForbiddenHandler("You don't have the permission!");
+            //if (tokenCreationTime.ToOADate() + 86400000 < fetchedStory.LastModifiedTime.ToOADate())
+            //    throw new UnauthorisedHandler("JWT Expired! Login again!");
+            
             
             Story story = _mapper.Map<Story>(body);
             var updatedStory = await _storyRepository.UpdateStory(id, story);
@@ -106,14 +110,14 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         {
             var fetchedStory = await _storyRepository.GetStory(id);
             if (fetchedStory == null) throw new NotFoundHandler("No Story was found with that Id");
-            var creationTime = _passwordH.GetTokenCreationTime();
-            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
-            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
-
-            if (tokenCreationTime.ToOADate() + 86400000 < fetchedStory.LastModifiedTime.ToOADate())
-                throw new UnauthorisedHandler("JWT Expired! Login again!");
             var currUserId = _passwordH.GetLoggedInId();
             if (currUserId != fetchedStory.AuthorID) throw new ForbiddenHandler("You don't have the permission!");
+            var creationTime = _passwordH.GetTokenCreationTime();
+            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
+            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+
+            //if (tokenCreationTime.ToOADate() + 86400000 < fetchedStory.LastModifiedTime.ToOADate())
+            //    throw new UnauthorisedHandler("JWT Expired! Login again!");
 
             return await _storyRepository.DeleteStory(id);
         }

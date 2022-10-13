@@ -3,6 +3,7 @@ using Cefalo.farhadcodes_a_CP_blog.Database.Models;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Contracts;
 using Cefalo.farhadcodes_a_CP_blog.Repository.Repositories;
 using Cefalo.farhadcodes_a_CP_blog.Service.Contracts;
+using Cefalo.farhadcodes_a_CP_blog.Service.CustomExceptions;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTO.Story;
 using Cefalo.farhadcodes_a_CP_blog.Service.DTOValidators;
 using Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts;
@@ -41,7 +42,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
         private readonly StoryDTO _storyDTOStub;
         private readonly ShowStoryDTO _showStoryDTOStub;
         private readonly UpdateStory _updateStoryDTOStub;
-        // Constructor
+        #region Constructor
         public StoryServiceUnitTests()
         {
 
@@ -60,13 +61,15 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             _storyServiceStub = new StoryService(_httpContextAccessorStub, _uriServiceStub, _storyRepositoryStub, _mapperStub, _passwordHStub, _updatestorydtovalidatorStub, _storydtovalidatorStub);
             // dummy stories
             dummystories = A.Fake<DummyStories>();
-            dummystory = dummystories.dummystory2;
+            dummystory = dummystories.dummystory1;
             // DTOs
             _storyDTOStub = dummystories.dummyStoryDTO;
             _showStoryDTOStub = dummystories.dummyShowStoryDTO;
             _updateStoryDTOStub = dummystories.dummyUpdateStoryDTO;
 
         }
+        #endregion
+
         #region GetStories
         [Fact]
         public async void GetStories_WithValidParameter_GetsAllStories()
@@ -192,14 +195,271 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
         {
             //Arrange
             A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
-            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
             A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
             A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
             A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id,dummystory)).Returns(dummystory);
             //Act
             var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
             //Assert
             A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateStory_WithValidParameter_GetLoggedInIdIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).Returns(dummystory);
+            //Act
+            var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
+            //Assert
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateStory_WithValidParameter_GetStoryIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).Returns(dummystory);
+            //Act
+            var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).MustHaveHappenedOnceExactly();
+
+        }
+        [Fact]
+        public async void UpdateStory_WithValidParameter_UpdateStoryIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).Returns(dummystory);
+            //Act
+            var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).MustHaveHappenedOnceExactly();
+
+        }
+        [Fact]
+        public async void UpdateStory_WithValidParameter_MapperIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).Returns(dummystory);
+            //Act
+            var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
+            //Assert
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).MustHaveHappenedOnceExactly();
+
+        }
+        [Fact]
+        public async void UpdateStory_WithValidParameter_ReturnsUpdatedStoryCorrectly()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            A.CallTo(() => _mapperStub.Map<Story>(_updateStoryDTOStub)).Returns(dummystory);
+            A.CallTo(() => _storyRepositoryStub.UpdateStory(dummystory.Id, dummystory)).Returns(dummystory);
+            //Act
+            var myStory = await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub);
+            //Assert
+            myStory.Should().NotBeNull();
+            myStory.Should().BeEquivalentTo(dummystory);
+
+        }
+        [Fact]
+        public async void UpdateStory_WithInvalidStoryId_ReturnsBadRequestException()
+        {
+            //Arrange
+            var errMessage = "Bad request! Story Id doesn't match!";
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).Throws(new BadRequestHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+
+        }
+        [Fact]
+        public async void UpdateStory_WithInvalidStoryId_ReturnsNotFoundException()
+        {
+            //Arrange
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            var errMessage = "No Story was found with that Id";
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Throws(new BadRequestHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+
+        }
+        [Fact]
+        public async void UpdateStory_AuthorIdDoesNotMatchLoggedInId_ReturnsForbiddenException()
+        {
+
+            //Arrange
+            var errMessage = "You don't have the permission!";
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            int wrongId = 69;
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(wrongId);
+            //Act
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+            //exception.GetType().Should().Be(typeof(ForbiddenHandler));
+        }
+        [Fact]
+        public async void UpdateStory_WithNoTokenExists_ReturnsUnAuthorisedException()
+        {
+            //Arrange
+            var errMessage = "You're not logged in! Please log in to get access.";
+            A.CallTo(() => _updatestorydtovalidatorStub.ValidateDTO(_updateStoryDTOStub)).DoesNothing();
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            //var ctime = String.Empty;
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Throws(new UnauthorisedHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.UpdateStory(dummystory.Id, _updateStoryDTOStub));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+            exception.GetType().Should().Be(typeof(UnauthorisedHandler));
+        }
+        #endregion
+
+        #region DeleteStory
+        [Fact]
+        public async void DeleteStory_WithValidParameter_GetStoryIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            var ctime = "ctime";
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Returns(ctime);
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).Returns(true);
+            //Act
+            var myStory = await _storyServiceStub.DeleteStory(dummystory.Id);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).MustHaveHappenedOnceExactly();
+
+        }
+        [Fact]
+        public async void DeleteStory_WithValidParameter_GetLoggedInIdIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            var ctime = "ctime";
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Returns(ctime);
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).Returns(true);
+            //Act
+            var myStory = await _storyServiceStub.DeleteStory(dummystory.Id);
+            //Assert
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void DeleteStory_WithValidParameter_GetTokenCreationIsInvokedOneTime()
+        {
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            var ctime = "ctime";
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Returns(ctime);
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).Returns(true);
+            //Act
+            var myStory = await _storyServiceStub.DeleteStory(dummystory.Id);
+            //Assert
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void DeleteStory_WithValidParameter_DeleteStoryIsInvokedOneTime()
+        {
+
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            var ctime = "ctime";
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Returns(ctime);
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).Returns(true);
+            //Act
+            var myStory = await _storyServiceStub.DeleteStory(dummystory.Id);
+            //Assert
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void DeleteStory_WithValidParameter_ReturnsTrueAfterDeletingStory()
+        {
+
+            //Arrange
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            var ctime = "ctime";
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Returns(ctime);
+            A.CallTo(() => _storyRepositoryStub.DeleteStory(dummystory.Id)).Returns(true);
+            //Act
+            var myStory = await _storyServiceStub.DeleteStory(dummystory.Id);
+            //Assert
+            myStory.Should().BeTrue();
+        }
+        [Fact]
+        public async void DeleteStory_WithInvalidStoryId_ReturnsNotFoundException()
+        {
+            //Arrange
+            var errMessage = "No Story was found with that Id";
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Throws(new BadRequestHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.DeleteStory(dummystory.Id));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+            exception.GetType().Should().Be(typeof(BadRequestHandler));
+
+        }
+        [Fact]
+        public async void DeleteStory_AuthorIdDoesNotMatchLoggedInId_ReturnsForbiddenException()
+        {
+            //Arrange
+            var errMessage = "You don't have the permission!";
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Throws(new ForbiddenHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.DeleteStory(dummystory.Id));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+            exception.GetType().Should().Be(typeof(ForbiddenHandler));
+        }
+        [Fact]
+        public async void DeleteStory_WithNoTokenExists_ReturnsUnAuthorisedException()
+        {
+            //Arrange
+            var errMessage = "You're not logged in! Please log in to get access.";
+            A.CallTo(() => _storyRepositoryStub.GetStory(dummystory.Id)).Returns(dummystory);
+            A.CallTo(() => _passwordHStub.GetLoggedInId()).Returns(dummystory.AuthorID);
+            //var ctime = String.Empty;
+            A.CallTo(() => _passwordHStub.GetTokenCreationTime()).Throws(new UnauthorisedHandler(errMessage));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _storyServiceStub.DeleteStory(dummystory.Id));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(errMessage);
+            exception.GetType().Should().Be(typeof(UnauthorisedHandler));
         }
         #endregion
     }
