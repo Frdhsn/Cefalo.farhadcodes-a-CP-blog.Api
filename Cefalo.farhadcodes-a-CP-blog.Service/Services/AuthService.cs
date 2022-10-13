@@ -34,19 +34,21 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             _signupdtovalidator = signupdtovalidator;
         }
 
-        public async Task<UserDTO?> SignUp(SignUpDTO req)
+        public async Task<UserDTO> SignUp(SignUpDTO req)
         {
             _signupdtovalidator.ValidateDTO(req);
-            _passwordH.HashPassword(req.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            Tuple<byte[], byte[]> hashedPassword= _passwordH.HashPassword(req.Password);
 
             var user = _mapper.Map<User>(req);
-            user.PasswordHash = passwordHash;
-            user.PasswordSalt = passwordSalt;
+            user.PasswordHash = hashedPassword.Item1;
+            user.PasswordSalt = hashedPassword.Item2;
             user.LastModifiedTime = DateTime.UtcNow;
             user.CreationTime = DateTime.UtcNow;
 
             var newUser = await _userRepository.PostUser(user);
             var userDTO = _mapper.Map<UserDTO>(newUser);
+            userDTO.Token = _passwordH.CreateToken(newUser);
             return userDTO;
         }
         public async Task<UserDTO> Login(LoginDTO req)

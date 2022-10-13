@@ -58,6 +58,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             dummyUser = dummyUserObj.dummyUser;
             dummyUserDTO = dummyUserObj.dummyUserDTO;
             _loginDTOStub = dummyUserObj.dummyLoginDTO;
+            _signUpDTOStub = dummyUserObj.dummySignUpDTO;
         }
         #endregion
 
@@ -194,6 +195,150 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             exception.Should().NotBeNull();
             exception.Message.Should().Be(msg);
             exception.GetType().Should().Be(typeof(UnauthorisedHandler));
+        }
+        #endregion
+
+        #region Signup
+
+        [Fact]
+        public async void Signup_WithValidParameter_ValidateDTOIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_HashPasswordIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _passwordH.HashPassword(_signUpDTOStub.Password)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_MapperIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_SignupIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_Mapper2IsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_CreateTokenIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var myUserWithToken = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void Signup_WithValidParameter_ReturnsSignedUpUser()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            //Act
+            var createdUser = await _authServiceStub.SignUp(_signUpDTOStub);
+            //Assert
+            createdUser.Should().NotBeNull();
+            createdUser.Should().BeEquivalentTo(dummyUserDTO);
+        }
+        [Fact]
+        public async void Signup_WithInvalidParameter_ReturnsBadRequestException()
+        {
+            //Arrange
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).DoesNothing();
+            A.CallTo(() => _passwordH.HashPassword(_loginDTOStub.Password)).Returns(new Tuple<byte[], byte[]>(dummyUser.PasswordSalt, dummyUser.PasswordHash));
+            A.CallTo(() => _mapperStub.Map<User>(_signUpDTOStub)).Returns(dummyUser);
+
+            A.CallTo(() => _userRepositoryStub.PostUser(dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            A.CallTo(() => _passwordH.CreateToken(dummyUser)).Returns(dummyUserDTO.Token);
+
+            var msg = "Invalid information!";
+            A.CallTo(() => _signupdtovalidatorStub.ValidateDTO(_signUpDTOStub)).Throws(new BadRequestHandler(msg));
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _authServiceStub.SignUp(_signUpDTOStub));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
         }
         #endregion
     }
