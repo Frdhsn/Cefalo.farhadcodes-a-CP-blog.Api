@@ -71,19 +71,19 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 
             if (fetchedUser == null) throw new NotFoundHandler("No user was found with that ID!");
             
-            var creationTime = _passwordH.GetTokenCreationTime();
-            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
+            //var creationTime = _passwordH.GetTokenCreationTime();
+            //if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
 
-            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
 
-            if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
-                throw new UnauthorisedHandler("JWT Expired! Login again!");
+            //if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
+            //    throw new UnauthorisedHandler("JWT Expired! Login again!");
 
             User mappedUser = _mapper.Map<User>(updateUserDto);
 
             
             var updatedUser = await _userRepository.UpdateUser(id, mappedUser);
-
+            // idk it's needed
             if (updatedUser == null) throw new NotFoundHandler("No user was found with that ID!");
 
             var userDto = _mapper.Map<UserDTO>(updatedUser);
@@ -97,13 +97,13 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
             var currUserId = _passwordH.GetLoggedInId();
             if (currUserId != id) throw new ForbiddenHandler("You don't have the permission!");
 
-            var creationTime = _passwordH.GetTokenCreationTime();
-            if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
+            //var creationTime = _passwordH.GetTokenCreationTime();
+            //if (creationTime == null) throw new UnauthorisedHandler("You're not logged in! Please log in to get access.");
 
-            DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
+            //DateTime tokenCreationTime = Convert.ToDateTime(creationTime);
 
-            if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
-                throw new UnauthorisedHandler("JWT Expired! Login again!");
+            //if (DateTime.Compare(tokenCreationTime, fetchedUser.LastModifiedTime) < 0)
+            //    throw new UnauthorisedHandler("JWT Expired! Login again!");
             return await _userRepository.DeleteUser(id);
         }
     }

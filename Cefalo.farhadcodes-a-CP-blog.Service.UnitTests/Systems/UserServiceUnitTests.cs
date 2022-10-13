@@ -284,9 +284,252 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
         #endregion
 
         #region UpdateUser
+        [Fact]
+        public async void UpdateUser_WithValidParameter_ValidateDTOIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_GetUserIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_GetLoggedInIdIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _passwordH.GetLoggedInId()).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_UserMapperIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_UpdateUserIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_UserDTOMapperIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void UpdateUser_WithValidParameter_UpdateUserWorks()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            //Act
+            var updatedUser = await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO);
+            //Assert
+            updatedUser.Should().NotBeNull();
+            updatedUser.Should().BeEquivalentTo(dummyUserDTO);
+        }
+        [Fact]
+        public async void UpdateUser_WithInvalidParameter_ReturnedBadRequestExceptionByValidateDTO()
+        {
+            //Arrange
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            var msg = "User information is invalid!";
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).Throws(new BadRequestHandler(msg));
+            //Act
+            var ex = await Record.ExceptionAsync(async () => await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO));
+            //Assert
+            ex.Should().NotBeNull();
+            ex.Message.Should().Be(msg);
+        }
+        [Fact]
+        public async void UpdateUser_WithInvalidParameter_ReturnsUnauthorisedException()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(-1);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            var msg = "You're not logged in! Please log in to get access.";
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
+        }
+        [Fact]
+        public async void UpdateUser_WithInvalidParameter_ReturnsForbiddenException()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(69);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            var msg = "You don't have the permission!";
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
+        }
+        [Fact]
+        public async void UpdateUser_WithInvalidParameter_NotFoundExceptionForGetUser()
+        {
+            //Arrange
+            A.CallTo(() => _userdtovalidatorStub.ValidateDTO(dummyUserDTO)).DoesNothing();
+            User? tmp = null;
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(tmp);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _mapperStub.Map<User>(dummyUserDTO)).Returns(dummyUser);
+            A.CallTo(() => _userRepositoryStub.UpdateUser(dummyUser.Id, dummyUser)).Returns(dummyUser);
+            A.CallTo(() => _mapperStub.Map<UserDTO>(dummyUser)).Returns(dummyUserDTO);
+            var msg = "No user was found with that ID!";
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _userServiceStub.UpdateUser(dummyUser.Id, dummyUserDTO));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
+        }
         #endregion
 
         #region DeleteUser
+
+        [Fact]
+        public async void DeleteUser_WithValidParameter_GetUserIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _userRepositoryStub.DeleteUser(dummyUser.Id)).Returns(true);
+            //Act
+            var updatedUser = await _userServiceStub.DeleteUser(dummyUser.Id);
+            //Assert
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void DeleteUser_WithValidParameter_GetLoggedInIdIsCalledOnce()
+        {
+            //Arrange
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _userRepositoryStub.DeleteUser(dummyUser.Id)).Returns(true);
+            //Act
+            var updatedUser = await _userServiceStub.DeleteUser(dummyUser.Id);
+            //Assert
+            A.CallTo(() => _passwordH.GetLoggedInId()).MustHaveHappenedOnceExactly();
+        }
+        [Fact]
+        public async void DeleteUser_WithValidParameter_GetLoggedInIdReturnsForbiddenException()
+        {
+            //Arrange
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(69);
+            A.CallTo(() => _userRepositoryStub.DeleteUser(dummyUser.Id)).Returns(true);
+            var msg = "You don't have the permission!";
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _userServiceStub.DeleteUser(dummyUser.Id));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
+        }
+
+        [Fact]
+        public async void DeleteUser_WithInvalidParameter_NotFoundExceptionForGetUser()
+        {
+            //Arrange
+            User? tmp = null;
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(tmp);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _userRepositoryStub.DeleteUser(dummyUser.Id)).Returns(true);
+            var msg = "No user was found with that ID!";
+            //Act
+            var exception = await Record.ExceptionAsync(async () => await _userServiceStub.DeleteUser(dummyUser.Id));
+            //Assert
+            exception.Should().NotBeNull();
+            exception.Message.Should().Be(msg);
+        }
+
+        [Fact]
+        public async void DeleteUser_WithValidParameter_DeleteUserWorks()
+        {
+            //Arrange
+            A.CallTo(() => _userRepositoryStub.GetUser(dummyUser.Id)).Returns(dummyUser);
+            A.CallTo(() => _passwordH.GetLoggedInId()).Returns(dummyUser.Id);
+            A.CallTo(() => _userRepositoryStub.DeleteUser(dummyUser.Id)).Returns(true);
+            //Act
+            var deleted = await _userServiceStub.DeleteUser(dummyUser.Id);
+            //Assert
+            deleted.Should().BeTrue();
+        }
         #endregion
     }
 }
