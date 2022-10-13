@@ -10,7 +10,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Contracts
     public interface IPassword
     {
 
-        void HashPassword(string password, out byte[] passwordHash, out byte[] passwordSalt);
+        Tuple<byte[], byte[]> HashPassword(string password);
         bool VerifyHash(string password, byte[] passwordHash, byte[] passwordSalt);
 
         string CreateToken(User user);

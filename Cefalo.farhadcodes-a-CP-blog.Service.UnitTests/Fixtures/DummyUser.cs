@@ -40,6 +40,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
             dummyLoginDTO = A.Fake<LoginDTO>(x => x.WithArgumentsForConstructor(() => new LoginDTO()));
             dummyLoginDTO.Email = "messi";
             dummyLoginDTO.Password = "messi12345";
+
+
+            dummySignUpDTO = A.Fake<SignUpDTO>(x => x.WithArgumentsForConstructor(() => new SignUpDTO()));
+            dummySignUpDTO.Name = "messi";
+            dummySignUpDTO.Email = "messi@gmail.com";
+            dummySignUpDTO.Password = "messi12345";
         }
     }
 }

@@ -57,13 +57,15 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
             }
             return creationTime;
         }
-        public void HashPassword(string password, out byte[] passwordHash, out byte[] passwordSalt)
+        public Tuple<byte[], byte[]> HashPassword(string password)
         {
+            byte[] passwordSalt, passwordHash;
             using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
             }
+            return new Tuple<byte[], byte[]>(passwordSalt, passwordHash);
         }
 
         public bool VerifyHash(string password, byte[] passwordHash, byte[] passwordSalt)
