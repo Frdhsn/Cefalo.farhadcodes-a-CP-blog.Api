@@ -16,7 +16,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
         public List<User> dummyUserList;
         public UserDTO dummyUserDTO, dummyUserDTO2;
         public List<UserDTO> dummyUserDTOList;
-
+        
         public SignUpDTO dummySignUpDTO;
         public LoginDTO dummyLoginDTO;
         public DummyUser()
@@ -30,7 +30,6 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Fixtures
             dummyUser.PasswordSalt = new byte[5];
             dummyUser.CreationTime = DateTime.Now;
             dummyUser.LastModifiedTime = DateTime.Now;
-
 
             dummyUser2 = A.Fake<User>(y => y.WithArgumentsForConstructor(() => new User()));
             dummyUser2.Id = 2;
