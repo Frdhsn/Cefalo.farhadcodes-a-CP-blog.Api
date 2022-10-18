@@ -17,6 +17,11 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.Repositories
         {
             _cpContext = cpContext;
         }
+
+        public StoryRepository()
+        {
+        }
+
         public async Task<List<Story>> GetStories()
         {
             return await _cpContext.Stories.ToListAsync();
