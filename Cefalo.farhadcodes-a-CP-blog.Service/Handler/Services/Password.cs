@@ -41,8 +41,8 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
             int Id = -1;
             if (_httpContextAccessor.HttpContext != null)
             {
-                Id = Int32.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name).Value);
-                //return name;
+                Id = Int32.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                return Id;
             }
             return Id;
         }
@@ -63,7 +63,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
             using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
             return new Tuple<byte[], byte[]>(passwordSalt, passwordHash);
         }
@@ -72,7 +72,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
         {
             using (var hmac = new HMACSHA512(passwordSalt))
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
@@ -80,18 +80,20 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Handler.Services
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, (user.Id).ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Expiration, DateTime.UtcNow.ToString())
             };
 
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                 _configuration.GetSection("EnvironmentVariable:token").Value));
 
             var createdCredential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddDays(50),
+                expires: DateTime.UtcNow.AddDays(50),
                 signingCredentials: createdCredential);
 
             var finalToken = new JwtSecurityTokenHandler().WriteToken(token);

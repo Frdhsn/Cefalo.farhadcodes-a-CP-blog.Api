@@ -25,19 +25,17 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IStoryRepository _storyRepository;
         private readonly IMapper _mapper;
         private readonly IPassword _passwordH;
-        private readonly IUriService _uriService;
+        //private readonly IUriService _uriService;
         private readonly BaseDTOValidator<UpdateStory> _updatestorydtovalidator;
         private readonly BaseDTOValidator<StoryDTO> _storydtovalidator;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        public StoryService(IHttpContextAccessor httpContextAccessor,IUriService uriService,IStoryRepository storyRepository, IMapper mapper, IPassword password, BaseDTOValidator<UpdateStory> updatestorydtovalidator, BaseDTOValidator<StoryDTO> storydtovalidator)
+        //private readonly IHttpContextAccessor _httpContextAccessor;
+        public StoryService(IStoryRepository storyRepository, IMapper mapper, IPassword password, BaseDTOValidator<UpdateStory> updatestorydtovalidator, BaseDTOValidator<StoryDTO> storydtovalidator)
         {
             _storyRepository = storyRepository;
             _mapper = mapper;
             _passwordH = password;
             _updatestorydtovalidator = updatestorydtovalidator;
             _storydtovalidator = storydtovalidator;
-            _uriService = uriService;
-            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<List<ShowStoryDTO>> GetStories()
@@ -47,11 +45,10 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         }
         public async Task<PagedResponse<List<ShowStoryDTO>>> GetPaginatedStories(PaginationFilter validFilter)
         {
-            var route = _httpContextAccessor.HttpContext.Request.Path.Value;
             var stories = await _storyRepository.GetPaginatedStories(validFilter.PageNumber,validFilter.PageSize);
             var response = stories.Select(story => _mapper.Map<ShowStoryDTO>(story)).ToList();
             var totalRecords = await _storyRepository.CountStory();
-            var pagedReponse = PaginationHelper.CreatePagedReponse<ShowStoryDTO>(response, validFilter, totalRecords, _uriService, route);
+            var pagedReponse = PaginationHelper.CreatePagedReponse<ShowStoryDTO>(response, validFilter, totalRecords);
             return pagedReponse;
         }
         public async Task<List<ShowStoryDTO>> GetStoriesByUser(int id)
