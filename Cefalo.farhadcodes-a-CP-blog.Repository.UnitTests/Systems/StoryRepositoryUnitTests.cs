@@ -118,7 +118,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Repository.UnitTests.Systems
         }
         #endregion
 
-        #region CreateStory
+        #region UpdateStory
 
         [Fact]
         public async void UpdateStory_WithValidParameters_UpdatesStory()

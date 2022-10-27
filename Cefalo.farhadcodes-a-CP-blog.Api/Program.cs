@@ -13,6 +13,8 @@ using Cefalo.farhadcodes_a_CP_blog.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +29,7 @@ builder.Services.AddCors(options =>
 });
 // Add services to the container.
 
-//builder.Services.AddControllers();
+builder.Services.AddControllers();
 
 // Added this block
 builder.Services.AddDbContext<CPContext>(options =>
@@ -42,6 +44,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddHttpContextAccessor();
+
+
 builder.Services.AddSingleton<IUriService>(o =>
 {
     var accessor = o.GetRequiredService<IHttpContextAccessor>();
@@ -50,7 +54,18 @@ builder.Services.AddSingleton<IUriService>(o =>
     return new UriService(uri);
 });
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -102,9 +117,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.ConfigureExceptionHandler();
+app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

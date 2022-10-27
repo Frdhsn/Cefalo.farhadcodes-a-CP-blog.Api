@@ -43,7 +43,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             _signupdtovalidatorStub = A.Fake<BaseDTOValidator<SignUpDTO>>();
             _userdtovalidatorStub = A.Fake<BaseDTOValidator<UserDTO>>();
 
-            _userServiceStub = new UserService(_userRepositoryStub,_passwordH,_mapperStub,_userdtovalidatorStub);
+            _userServiceStub = new UserService(_userRepositoryStub,_mapperStub,_passwordH,_userdtovalidatorStub);
 
             dummyUserObj = A.Fake<DummyUser>();
             dummyUser = dummyUserObj.dummyUser;

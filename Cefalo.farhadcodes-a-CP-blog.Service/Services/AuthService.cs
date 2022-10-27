@@ -12,23 +12,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
 {
     public class AuthService: IAuthService
     {
         private readonly IMapper _mapper;
-        private readonly IConfiguration _config;
+        //private readonly IConfiguration _config;
         private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepository;
         private readonly BaseDTOValidator<LoginDTO> _logindtovalidator;
         private readonly BaseDTOValidator<SignUpDTO> _signupdtovalidator;
 
-        public AuthService(BaseDTOValidator<SignUpDTO> signupdtovalidator, BaseDTOValidator<LoginDTO> logindtovalidator, IUserRepository userRepository, IConfiguration config,IPassword passwordH, IMapper mapper)
+        public AuthService(IUserRepository userRepository, IMapper mapper, IPassword passwordH, BaseDTOValidator<LoginDTO> logindtovalidator, BaseDTOValidator<SignUpDTO> signupdtovalidator)
         {
             _userRepository = userRepository;
             _mapper = mapper;
-            _config = config;
+            //_config = config;
             _passwordH = passwordH;
             _logindtovalidator = logindtovalidator;
             _signupdtovalidator = signupdtovalidator;

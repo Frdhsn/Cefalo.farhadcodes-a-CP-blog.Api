@@ -30,8 +30,6 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
         private readonly IStoryService _storyServiceStub;
         private readonly IMapper _mapperStub;
         private readonly IPassword _passwordHStub;
-        private readonly IUriService _uriServiceStub;
-        private readonly IHttpContextAccessor _httpContextAccessorStub;
         // DTO validators
         private readonly BaseDTOValidator<UpdateStory> _updatestorydtovalidatorStub;
         private readonly BaseDTOValidator<StoryDTO> _storydtovalidatorStub;
@@ -55,14 +53,12 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             _storyRepositoryStub = A.Fake<IStoryRepository>();
             _mapperStub = A.Fake<IMapper>();
             _passwordHStub = A.Fake<IPassword>();
-            _uriServiceStub = A.Fake<IUriService>();
-            _httpContextAccessorStub = A.Fake<IHttpContextAccessor>();
             // DTO validators
             _updatestorydtovalidatorStub = A.Fake<BaseDTOValidator<UpdateStory>>();
             _showStorydtovalidatorStub = A.Fake<BaseDTOValidator<ShowStoryDTO>>();
             _storydtovalidatorStub = A.Fake<BaseDTOValidator<StoryDTO>>();
             // service instance
-            _storyServiceStub = new StoryService(_httpContextAccessorStub, _uriServiceStub, _storyRepositoryStub, _mapperStub, _passwordHStub, _updatestorydtovalidatorStub, _storydtovalidatorStub);
+            _storyServiceStub = new StoryService(_storyRepositoryStub, _mapperStub, _passwordHStub, _updatestorydtovalidatorStub, _storydtovalidatorStub);
             // dummy stories
             dummystories = A.Fake<DummyStories>();
             dummystory = dummystories.dummystory1;

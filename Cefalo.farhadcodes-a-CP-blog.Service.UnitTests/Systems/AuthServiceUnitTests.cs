@@ -28,7 +28,6 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
     {
 
         private readonly IMapper _mapperStub;
-        private readonly IConfiguration _configStub;
         private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepositoryStub;
         private readonly IAuthService _authServiceStub;
@@ -51,7 +50,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.UnitTests.Systems
             _logindtovalidatorStub = A.Fake<BaseDTOValidator<LoginDTO>>();
             _signupdtovalidatorStub = A.Fake<BaseDTOValidator<SignUpDTO>>();
 
-            _authServiceStub = new AuthService(_signupdtovalidatorStub, _logindtovalidatorStub, _userRepositoryStub, _configStub, _passwordH, _mapperStub);
+            _authServiceStub = new AuthService(_userRepositoryStub, _mapperStub, _passwordH, _logindtovalidatorStub, _signupdtovalidatorStub);
             // dummy data
 
             dummyUserObj = A.Fake<DummyUser>();

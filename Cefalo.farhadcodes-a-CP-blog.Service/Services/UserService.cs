@@ -21,7 +21,7 @@ namespace Cefalo.farhadcodes_a_CP_blog.Service.Services
         private readonly IPassword _passwordH;
         private readonly IUserRepository _userRepository;
         private readonly BaseDTOValidator<UserDTO> _userdtovalidator;
-        public UserService(IUserRepository userRepository,IPassword passwordH, IMapper mapper, BaseDTOValidator<UserDTO> userdtovalidator) { 
+        public UserService(IUserRepository userRepository, IMapper mapper,IPassword passwordH, BaseDTOValidator<UserDTO> userdtovalidator) { 
             _userRepository = userRepository;
             _mapper = mapper;
             _passwordH = passwordH;
